@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>WOOfi Finance — DEX, sPMM Algorithm, WOO Token Staking &amp; Earn Vaults Guide (2026)</title>
+  <meta name="description" content="Complete WOOfi Finance guide (2026): how WOOfi's synthetic Proactive Market Making (sPMM) algorithm delivers CEX-grade prices on-chain, WOOfi Earn vaults, WOO token staking and rebates, cross-chain swaps, supported chains, security, and comparison with Uniswap and dYdX.">
+  <meta name="author" content="Crypto Finance Experts">
+  <link rel="canonical" href="https://woofi-guide.example.com/">
+  <link rel="icon" type="image/png" href="woo.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://woofi-guide.example.com/">
+  <meta property="og:title" content="WOOfi Finance — sPMM DEX, WOO Token &amp; Earn Vaults Guide (2026)">
+  <meta property="og:description" content="Practical WOOfi guide: sPMM algorithm, spot trading, Earn vaults, WOO staking, cross-chain swaps, and comparison with Uniswap.">
+  <meta property="og:image" content="cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WOOfi Finance Guide (2026)">
+  <meta name="twitter:description" content="How WOOfi's sPMM DEX works, Earn vaults, WOO token staking, and multi-chain DeFi trading for 2026.">
+
+  <style>
+    :root {
+      --b:    #1B6AFF;
+      --b2:   #1558D4;
+      --b3:   #1047AA;
+      --ba:   #4D8EFF;
+      --bb:   #99BFFF;
+
+      /* aqua accent */
+      --a:    #00D9B5;
+      --a2:   #00B598;
+      --aa:   #33E5C6;
+      --ab:   #99F0E1;
+
+      --ink:   #F0F7FF;
+      --sub:   #99BFFF;
+      --muted: #94A3B8;
+      --dim:   #64748B;
+
+      --bg:    #020810;
+      --card:  rgba(255,255,255,.027);
+      --line:  rgba(255,255,255,.065);
+      --lb:    rgba(27,106,255,.14);
+      --la:    rgba(0,217,181,.10);
+
+      --ok:   #34D399;
+      --warn: #FBBF24;
+      --err:  #F87171;
+
+      --r:  12px;
+      --rl: 18px;
+      --gap: 1.2rem;
+      --sh: 0 8px 32px rgba(0,0,0,.68);
+      --shb: 0 4px 26px rgba(27,106,255,.14);
+      --sha: 0 4px 20px rgba(0,217,181,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 960px 540px at 0%   0%,  rgba(21,88,212,.11), transparent 55%),
+        radial-gradient(ellipse 700px 420px at 100% 8%,  rgba(0,181,152,.06), transparent 50%),
+        radial-gradient(ellipse 600px 380px at 50%  97%, rgba(16,71,170,.07), transparent 55%);
+      color: var(--muted);
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: var(--ba); text-decoration: none }
+    a:hover { text-decoration: underline }
+    img { max-width: 100%; height: auto; display: block }
+    strong { color: #CCE0FF; font-weight: 600 }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.4rem }
+
+    h1,h2,h3,h4 { color: var(--ink); line-height: 1.25 }
+    h1 { font-size: clamp(2rem,5vw,3.2rem); font-weight: 800; letter-spacing: -.5px }
+    h2 { font-size: clamp(1.25rem,2.5vw,1.75rem); font-weight: 700; margin-top: 1.8rem; padding-top: .7rem; border-top: 1px solid var(--line) }
+    h3 { font-size: 1.08rem; font-weight: 700; color: var(--sub) }
+    p,li,td,th { font-size: 1rem; line-height: 1.75 }
+    .lead { font-size: 1.08rem; color: #7AADFF }
+
+    /* ── HERO ── */
+    header.hero {
+      padding: clamp(2.5rem,6vw,5.5rem) 0 clamp(2rem,4vw,3.5rem);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-card {
+      background: rgba(21,88,212,.05);
+      border: 1px solid var(--lb);
+      border-radius: var(--rl);
+      padding: clamp(1.5rem,3.5vw,2.6rem);
+      box-shadow: var(--sh), var(--shb);
+      position: relative; overflow: hidden;
+    }
+    /* blue-to-aqua shimmer */
+    .hero-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,
+        transparent 4%,
+        rgba(77,142,255,.50) 25%,
+        rgba(27,106,255,.85) 42%,
+        rgba(0,217,181,.65) 58%,
+        rgba(51,229,198,.50) 75%,
+        transparent 96%
+      );
+    }
+
+    .brand-row { display: flex; align-items: center; gap: .95rem; margin-bottom: 1rem }
+    .brand-logo {
+      width: 56px; height: 56px; border-radius: 14px;
+      border: 1px solid rgba(27,106,255,.30);
+      background: rgba(21,88,212,.12);
+      padding: .3rem; object-fit: contain;
+      box-shadow: 0 4px 18px rgba(27,106,255,.22);
+      flex: 0 0 auto;
+    }
+    .brand-label { color: var(--dim); font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .4px }
+    .brand-sub   { color: var(--muted); font-size: .85rem }
+
+    /* ── CTA ── */
+    .cta-center { display: flex; justify-content: center; margin-top: 2.2rem }
+    .cta {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: linear-gradient(135deg, #4D8EFF 0%, #1B6AFF 40%, #1558D4 76%, #1047AA 100%);
+      color: #fff;
+      padding: 1.2rem 3.2rem;
+      border-radius: 16px;
+      font-weight: 900; font-size: 1.15rem; letter-spacing: .15px;
+      box-shadow:
+        0 0 0 1px rgba(27,106,255,.28),
+        0 0 36px rgba(27,106,255,.38),
+        0 8px 24px rgba(21,88,212,.30),
+        0 22px 50px rgba(16,71,170,.24);
+      border: none; cursor: pointer; text-decoration: none;
+      transition: transform .18s, box-shadow .18s, filter .18s;
+    }
+    .cta:hover {
+      transform: translateY(-3px) scale(1.025); filter: brightness(1.08);
+      color: #fff; text-decoration: none;
+      box-shadow:
+        0 0 0 1px rgba(27,106,255,.44),
+        0 0 54px rgba(27,106,255,.54),
+        0 10px 32px rgba(21,88,212,.42),
+        0 28px 60px rgba(16,71,170,.32);
+    }
+
+    /* ── NOTE ── */
+    .note {
+      border-left: 3px solid var(--ba);
+      padding: .85rem 1rem;
+      background: rgba(21,88,212,.07);
+      border-radius: 0 9px 9px 0;
+      color: var(--sub); margin-top: 1rem;
+    }
+    .note.aqua {
+      border-left-color: var(--aa);
+      background: rgba(0,181,152,.07);
+      color: var(--ab);
+    }
+
+    /* ── STEPS ── */
+    section.step-guide {
+      padding: clamp(2rem,5vw,3.5rem) 0;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    }
+    .steps { display: grid; gap: var(--gap); grid-template-columns: 1fr }
+    .step {
+      background: var(--card); border: 1px solid var(--line);
+      border-top: 2px solid rgba(27,106,255,.28); border-radius: var(--r);
+      padding: 1.25rem; box-shadow: var(--sh); transition: transform .18s, box-shadow .18s;
+    }
+    .step:hover { transform: translateY(-3px); box-shadow: var(--sh), var(--shb) }
+    .step .icon {
+      width: 44px; height: 44px; border-radius: 9px;
+      display: inline-grid; place-items: center;
+      background: rgba(21,88,212,.12); margin-bottom: .65rem;
+      font-weight: 800; font-size: .92rem; color: var(--ba);
+      border: 1px solid rgba(27,106,255,.22);
+    }
+
+    /* ── CARD ── */
+    main { padding-top: .5rem }
+    main .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--r); padding: 1.5rem; margin: 1.2rem 0; box-shadow: var(--sh);
+    }
+    main .card > h2:first-child { margin-top: 0; border-top: none; padding-top: 0 }
+
+    /* ── TOC ── */
+    .toc { border: 1px solid var(--lb); background: rgba(21,88,212,.05); border-radius: var(--r); padding: 1.1rem 1.3rem }
+    .toc strong { color: var(--ink) }
+    .toc ul { margin: .5rem 0 0; padding-left: 1.1rem }
+    .toc li { margin: .28rem 0; font-size: .96rem }
+    .toc a { font-weight: 600 }
+
+    /* ── CALLOUT GRID ── */
+    .callout-grid { display: grid; gap: var(--gap); grid-template-columns: 1fr; margin-top: .8rem }
+    .mini { background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--r); padding: 1rem }
+    .mini h3 { margin-bottom: .35rem }
+    .kpi-badges { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .55rem }
+    .kpi-badges span {
+      border: 1px solid rgba(27,106,255,.22); background: rgba(21,88,212,.09);
+      color: var(--sub); padding: .26rem .54rem;
+      border-radius: 999px; font-size: .87rem; font-weight: 600;
+    }
+    .kpi-badges span.aqua {
+      border-color: rgba(0,217,181,.22); background: rgba(0,181,152,.08);
+      color: var(--aa);
+    }
+
+    /* ── sPMM PRICE MODEL VISUAL — unique element ── */
+    .spmm-visual {
+      margin-top: 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .sv-header {
+      padding: .6rem 1.1rem;
+      background: rgba(21,88,212,.07);
+      border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .sv-title { font-size: .82rem; font-weight: 700; color: var(--ba); text-transform: uppercase; letter-spacing: .4px }
+    .sv-subtitle { font-size: .78rem; color: var(--dim) }
+    .sv-body { padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .75rem }
+    /* price comparison rows */
+    .sv-row { display: flex; align-items: center; gap: .7rem }
+    .sv-source {
+      min-width: 110px; font-size: .82rem; font-weight: 700;
+      display: flex; align-items: center; gap: .35rem;
+    }
+    .sv-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto }
+    .sv-bar-wrap { flex: 1; position: relative; height: 20px }
+    .sv-bar {
+      height: 100%; border-radius: 4px;
+      display: flex; align-items: center; padding: 0 .5rem;
+      font-size: .78rem; font-weight: 800; color: #fff;
+      white-space: nowrap;
+    }
+    .sv-price-label {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      font-size: .78rem; font-weight: 700;
+      padding-right: .35rem;
+    }
+    .sv-spread {
+      min-width: 62px; text-align: right;
+      font-size: .78rem; font-weight: 700;
+    }
+    /* divider with label */
+    .sv-divider {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .76rem; color: var(--dim); font-weight: 600;
+      margin: .1rem 0;
+    }
+    .sv-divider::before, .sv-divider::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.06);
+    }
+    .sv-footer {
+      padding: .65rem 1.1rem;
+      background: rgba(0,217,181,.04);
+      border-top: 1px solid rgba(0,217,181,.08);
+      font-size: .82rem; color: var(--muted);
+      display: flex; flex-wrap: wrap; gap: .8rem;
+    }
+    .sv-footer strong { color: var(--aa) }
+
+    /* ── EARN VAULT CARDS ── */
+    .vault-grid { display: grid; grid-template-columns: 1fr; gap: var(--gap); margin-top: 1rem }
+    .vault-card {
+      border: 1px solid var(--line); border-radius: var(--r);
+      padding: 1.1rem 1.2rem;
+      background: rgba(255,255,255,.018);
+      display: flex; flex-direction: column; gap: .5rem;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .vault-card:hover { transform: translateY(-3px); box-shadow: var(--shb) }
+    .vault-header { display: flex; align-items: center; justify-content: space-between }
+    .vault-name { font-weight: 800; color: var(--ink); font-size: .96rem }
+    .vault-apy {
+      font-size: 1.05rem; font-weight: 900;
+      padding: .22rem .65rem; border-radius: 8px;
+    }
+    .vault-apy.high { background: rgba(0,217,181,.12); color: var(--aa) }
+    .vault-apy.mid  { background: rgba(27,106,255,.12); color: var(--ba) }
+    .vault-desc { font-size: .88rem; color: var(--muted) }
+    .vault-meta { display: flex; flex-wrap: wrap; gap: .4rem }
+    .vault-tag {
+      font-size: .75rem; font-weight: 700; padding: .14rem .4rem;
+      border-radius: 5px;
+    }
+    .tag-stable { background: rgba(52,211,153,.10); color: #34D399 }
+    .tag-chain  { background: rgba(27,106,255,.10); color: var(--ba) }
+    .tag-woo    { background: rgba(0,217,181,.10); color: var(--aa) }
+    .tag-auto   { background: rgba(251,191,36,.10); color: var(--warn) }
+
+    /* ── CHAIN BADGES ── */
+    .chain-grid { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: .8rem }
+    .chain {
+      background: rgba(255,255,255,.03); border: 1px solid var(--line);
+      border-radius: 8px; padding: .38rem .75rem;
+      font-size: .9rem; font-weight: 600; color: #CBD5E1;
+    }
+
+    /* ── TOKO BARS ── */
+    .toko-bar { display: flex; flex-direction: column; gap: .6rem; margin-top: 1rem }
+    .toko-row { display: flex; align-items: center; gap: .85rem }
+    .toko-label { min-width: 200px; font-size: .92rem; color: #CCE0FF; font-weight: 600 }
+    .toko-track { flex: 1; height: 8px; background: rgba(255,255,255,.07); border-radius: 999px; overflow: hidden }
+    .toko-fill  { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--ba), var(--b)) }
+    .toko-fill.aqua { background: linear-gradient(90deg, var(--aa), var(--a)) }
+    .toko-val   { min-width: 55px; text-align: right; font-size: .9rem; font-weight: 700; color: var(--ba) }
+    .toko-val.aqua { color: var(--aa) }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--line) }
+    table { width: 100%; border-collapse: collapse; min-width: 480px }
+    th,td { padding: .8rem .95rem; border-bottom: 1px solid var(--line); text-align: left }
+    th { background: rgba(21,88,212,.07); color: var(--ink); font-weight: 700; font-size: .92rem }
+    tr.hi { background: rgba(21,88,212,.04) }
+    tr:hover td { background: rgba(255,255,255,.016) }
+    tr:last-child td { border-bottom: none }
+    .ok  { color: var(--ok)  }
+    .warn{ color: var(--warn) }
+    .err { color: var(--err)  }
+
+    /* ── EEAT ── */
+    .eeat { background: var(--card); border: 1px solid var(--lb); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--sh) }
+    .eeat > h2:first-child { margin-top: 0; border-top: none; padding-top: 0 }
+
+    /* ── FAQ ── */
+    .faq-item { border-bottom: 1px solid var(--line); padding: .9rem 0 }
+    .faq-item:last-child { border-bottom: none }
+    .faq-button { all: unset; display: flex; justify-content: space-between; align-items: flex-start; width: 100%; cursor: pointer; gap: 1rem }
+    .faq-button:focus-visible { outline: 2px solid var(--b); border-radius: 4px }
+    .faq-button h3 { margin: 0; font-weight: 700; font-size: 1rem; line-height: 1.4 }
+    .faq-content { max-height: 0; overflow: hidden; transition: max-height .26s ease }
+    .faq-content.open { padding-top: .65rem }
+    .faq-plus { font-weight: 800; font-size: 1.35rem; color: var(--ba); flex: 0 0 auto; line-height: 1; transition: transform .2s }
+    .faq-button[aria-expanded="true"] .faq-plus { transform: rotate(45deg) }
+
+    @media(min-width:860px){
+      .steps { grid-template-columns: repeat(4,1fr) }
+      .callout-grid { grid-template-columns: 1fr 1fr }
+      .vault-grid { grid-template-columns: 1fr 1fr }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero" role="banner">
+  <div class="container">
+    <div class="hero-card">
+      <div class="brand-row">
+        <img class="brand-logo" src="woo.png" alt="WOOfi Finance logo">
+        <div>
+          <div class="brand-label">WOO Network DEX &amp; Earn Platform</div>
+          <div class="brand-sub">sPMM Algorithm · CEX-Grade Pricing · WOOfi Earn Vaults · WOO Staking · Cross-Chain Swaps</div>
+        </div>
+      </div>
+
+      <h1>WOOfi Finance</h1>
+      <p class="lead" style="margin-top:.75rem">
+        The complete guide to <strong>WOOfi Finance</strong> — the decentralised
+        trading and yield platform built by <strong>WOO Network</strong>
+        that uses a proprietary
+        <strong>synthetic Proactive Market Making (sPMM)</strong> algorithm
+        to deliver <strong>CEX-quality prices on-chain</strong>,
+        eliminating the price impact and spread inefficiencies of traditional AMMs.
+        Understand how sPMM achieves near-zero slippage by sourcing
+        <strong>professional market-maker liquidity</strong> from WOO Network's
+        institutional order book, how <strong>WOOfi Earn</strong> vaults let anyone
+        deposit stablecoins and blue-chip assets for competitive yield,
+        how <strong>WOO token staking</strong> unlocks fee rebates
+        and enhanced vault APY, and how WOOfi operates across
+        <strong>10+ EVM chains</strong> with unified cross-chain swap routing.
+      </p>
+
+      <div class="cta-center">
+        <a href="#" class="cta" aria-label="Open WOOfi Finance">
+          <span>⚡</span> Open WOOfi
+        </a>
+      </div>
+
+      <div class="note aqua">
+        <strong>Institutional liquidity, DeFi access:</strong> WOOfi's sPMM algorithm
+        is backed by WOO Network's professional market-making operation — one of the
+        top-10 global crypto market makers by volume. This means the on-chain prices
+        you trade at on WOOfi are informed by the same institutional depth that powers
+        WOO Network's CEX — not just the liquidity of retail LP pools.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STEPS -->
+<section class="step-guide" aria-labelledby="how-works">
+  <div class="container">
+    <h2 id="how-works" style="margin-top:0;border-top:none;padding-top:0">
+      How WOOfi Works: Connect → Swap at sPMM Price → Earn in Vaults → Stake WOO for Rebates
+    </h2>
+    <div class="steps" role="list">
+      <article class="step" role="listitem">
+        <div class="icon">01</div>
+        <h3>Connect wallet and select chain</h3>
+        <p>Connect your EVM wallet on any of WOOfi's 10+ supported chains — Ethereum, Arbitrum, BNB Chain, Polygon, Avalanche, Optimism, Fantom, and more. WOOfi's interface auto-detects your chain and shows available trading pairs and vault options.</p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">02</div>
+        <h3>Swap using sPMM pricing</h3>
+        <p>Execute token swaps through WOOfi's sPMM algorithm — which sources pricing from WOO Network's institutional market-making infrastructure and on-chain liquidity simultaneously. For major pairs, this typically delivers tighter spreads and lower price impact than standard AMM DEXs.</p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">03</div>
+        <h3>Deposit into WOOfi Earn vaults</h3>
+        <p>Deposit USDC, USDT, WOO, BTC, ETH, or other supported assets into WOOfi Earn vaults to earn yield. Vaults deploy capital into WOO Network's lending operations and optimised DeFi strategies — delivering competitive APY without manual management.</p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">04</div>
+        <h3>Stake WOO for fee rebates</h3>
+        <p>Stake WOO tokens to receive trading fee rebates on all WOOfi swaps — reducing your effective trading cost to near-zero. WOO stakers also access boosted vault APY and governance participation in WOO Network's DAO.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="container" role="main">
+
+  <!-- TOC -->
+  <section class="card toc" aria-label="Table of Contents">
+    <strong>On this page — WOOfi Finance:</strong>
+    <ul>
+      <li><a href="#overview">What is WOOfi and WOO Network's role in DeFi</a></li>
+      <li><a href="#spmm">sPMM algorithm: how WOOfi delivers CEX-grade prices on-chain</a></li>
+      <li><a href="#swap">WOOfi Swap: trading, cross-chain, and fee structure</a></li>
+      <li><a href="#earn">WOOfi Earn: vaults, yield sources, and deposit mechanics</a></li>
+      <li><a href="#woo-token">WOO token: staking, fee rebates, and tokenomics</a></li>
+      <li><a href="#chains">Supported chains and cross-chain swaps</a></li>
+      <li><a href="#safety">WOOfi security model and risks</a></li>
+      <li><a href="#comparison">WOOfi vs Uniswap vs GMX vs dYdX: DEX comparison</a></li>
+      <li><a href="#best-practices">Best practices for WOOfi traders and yield earners</a></li>
+      <li><a href="#troubleshooting">Troubleshooting: swap failures, vault deposits, WOO staking</a></li>
+      <li><a href="#eeat">Authoritative sources &amp; references</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="card" id="overview">
+    <h2>What Is WOOfi and WOO Network's Role in DeFi</h2>
+    <p>
+      <strong>WOOfi</strong> is the decentralised finance arm of
+      <strong>WOO Network</strong> — a crypto liquidity network founded in 2019
+      that combines institutional market-making with retail trading products.
+      WOO Network operates both a centralised exchange (WOO X)
+      and WOOfi — its on-chain DEX and yield platform — sharing liquidity
+      infrastructure between both.
+    </p>
+    <p>
+      The key insight behind WOOfi is that traditional AMM DEXs price trades
+      using only the liquidity in their own on-chain pools — creating price impact
+      and spread costs proportional to pool depth.
+      WOOfi's sPMM algorithm supplements on-chain liquidity with
+      WOO Network's institutional market-making data, delivering pricing
+      closer to CEX mid-price than most on-chain alternatives.
+    </p>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>For active DeFi traders</h3>
+        <p style="color:var(--muted)">Get near-CEX prices on major token pairs without leaving your wallet. WOOfi's sPMM delivers tighter spreads than standard AMMs on large trades for major pairs like ETH/USDC, BTC/USDC, and WOO pairs. Staking WOO reduces trading fees to near-zero on top of the already competitive pricing.</p>
+        <div class="kpi-badges"><span>Tight spreads</span><span>Low price impact</span><span>WOO fee rebates</span></div>
+      </div>
+      <div class="mini">
+        <h3>For yield seekers</h3>
+        <p style="color:var(--muted)">WOOfi Earn offers stablecoin and blue-chip asset vaults with APY sourced from WOO Network's institutional lending and optimised DeFi strategies. Single-asset deposits with auto-compounding — no LP complexity or impermanent loss exposure.</p>
+        <div class="kpi-badges"><span class="aqua">Single-asset vaults</span><span class="aqua">Auto-compound</span><span class="aqua">No IL risk</span></div>
+      </div>
+      <div class="mini">
+        <h3>For WOO token holders</h3>
+        <p style="color:var(--muted)">Stake WOO on WOOfi to earn fee rebates on every swap, boosted vault APY, and governance rights. The WOO staking model aligns token holders with platform trading volume — more volume means more fee redistribution to stakers.</p>
+        <div class="kpi-badges"><span>Fee rebates</span><span>Boosted APY</span><span>DAO governance</span></div>
+      </div>
+      <div class="mini">
+        <h3>For protocol integrations</h3>
+        <p style="color:var(--muted)">WOOfi exposes a developer API and router that other protocols use to source WOOfi's sPMM pricing for their own swaps. Many DeFi aggregators (1inch, Paraswap, OpenOcean) route through WOOfi when it offers best execution — making WOOfi a backend liquidity source across the DeFi ecosystem.</p>
+        <div class="kpi-badges"><span>API integration</span><span>Aggregator backend</span><span>Best execution routing</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sPMM -->
+  <section class="card" id="spmm">
+    <h2>sPMM Algorithm: How WOOfi Delivers CEX-Grade Prices On-Chain</h2>
+    <p>
+      <strong>Synthetic Proactive Market Making (sPMM)</strong> is WOOfi's proprietary
+      pricing algorithm — the core innovation that distinguishes it from standard AMMs
+      like Uniswap or Curve.
+    </p>
+
+    <!-- sPMM price model visual — unique design element -->
+    <h3 style="margin-top:1.1rem;margin-bottom:.5rem">Price comparison: ETH/USDC — $50,000 swap (illustrative)</h3>
+    <div class="spmm-visual" role="img" aria-label="sPMM price comparison showing WOOfi vs AMM DEXs vs CEX for a large ETH swap">
+      <div class="sv-header">
+        <span class="sv-title">Execution price comparison</span>
+        <span class="sv-subtitle">Selling 20 ETH (~$50,000) · Illustrative</span>
+      </div>
+      <div class="sv-body">
+        <!-- CEX reference -->
+        <div class="sv-row">
+          <div class="sv-source">
+            <div class="sv-dot" style="background:#94A3B8"></div>
+            <span style="color:var(--dim)">CEX mid-price</span>
+          </div>
+          <div class="sv-bar-wrap">
+            <div class="sv-bar" style="width:100%;background:rgba(148,163,184,.18);color:var(--dim)">$2,498.20 / ETH</div>
+          </div>
+          <div class="sv-spread" style="color:var(--dim)">Reference</div>
+        </div>
+
+        <div class="sv-divider">DEX execution prices</div>
+
+        <!-- WOOfi -->
+        <div class="sv-row">
+          <div class="sv-source">
+            <div class="sv-dot" style="background:#1B6AFF"></div>
+            <span style="color:var(--ba);font-weight:800">WOOfi sPMM</span>
+          </div>
+          <div class="sv-bar-wrap">
+            <div class="sv-bar" style="width:98%;background:linear-gradient(90deg,#1B6AFF,#00D9B5)">$2,495.80 / ETH</div>
+          </div>
+          <div class="sv-spread" style="color:var(--aa)">−0.10%</div>
+        </div>
+
+        <!-- Uniswap V3 -->
+        <div class="sv-row">
+          <div class="sv-source">
+            <div class="sv-dot" style="background:#FF007A"></div>
+            <span style="color:var(--muted)">Uniswap V3</span>
+          </div>
+          <div class="sv-bar-wrap">
+            <div class="sv-bar" style="width:88%;background:rgba(255,0,122,.22);color:#FF7AB8">$2,473.40 / ETH</div>
+          </div>
+          <div class="sv-spread" style="color:var(--warn)">−1.00%</div>
+        </div>
+
+        <!-- Standard AMM -->
+        <div class="sv-row">
+          <div class="sv-source">
+            <div class="sv-dot" style="background:#F87171"></div>
+            <span style="color:var(--muted)">Standard AMM</span>
+          </div>
+          <div class="sv-bar-wrap">
+            <div class="sv-bar" style="width:78%;background:rgba(248,113,113,.20);color:#F87171">$2,451.20 / ETH</div>
+          </div>
+          <div class="sv-spread" style="color:var(--err)">−1.88%</div>
+        </div>
+      </div>
+      <div class="sv-footer">
+        <div>WOOfi saving vs AMM: <strong>~$2,230 on a $50k trade</strong></div>
+        <div>sPMM source: <strong>WOO institutional market maker data</strong></div>
+        <div>Advantage scales: <strong>larger trades benefit most</strong></div>
+      </div>
+    </div>
+
+    <div class="callout-grid" style="margin-top:1.2rem">
+      <div class="mini">
+        <h3>How sPMM works technically</h3>
+        <p style="color:var(--muted)">sPMM uses a parametric price function informed by WOO Network's off-chain market-making data — specifically the mid-price (p), spread (s), and slippage coefficient (k) for each pair. These parameters are updated continuously by WOO Network's market-making engine, keeping on-chain prices aligned with institutional quote streams rather than just pool supply/demand ratios.</p>
+        <div class="kpi-badges"><span>Parametric pricing</span><span>Live MM parameters</span><span>Mid-price anchored</span></div>
+      </div>
+      <div class="mini">
+        <h3>When sPMM has an advantage</h3>
+        <p style="color:var(--muted)">sPMM's advantage is most significant on large trades for major liquid pairs (ETH, BTC, WOO against USDC/USDT). For small trades (&lt;$1,000) on standard pairs, the price difference vs Uniswap V3 may be negligible. For long-tail tokens with low CEX liquidity, sPMM may not have superior data to draw from. Always compare with a DEX aggregator quote for the best overall execution.</p>
+        <div class="kpi-badges"><span>Large trades</span><span>Major pairs</span><span>Compare aggregator</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SWAP -->
+  <section class="card" id="swap">
+    <h2>WOOfi Swap: Trading, Cross-Chain Swaps, and Fee Structure</h2>
+    <p>
+      <strong>WOOfi Swap</strong> is the trading interface powered by sPMM —
+      supporting spot swaps on 10+ chains and cross-chain swaps between them
+      via Stargate or native bridge integrations.
+    </p>
+
+    <div class="table-wrap">
+      <table aria-label="WOOfi swap features">
+        <thead>
+          <tr><th>Feature</th><th>Details</th><th>User benefit</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Spot swaps</td>
+            <td>sPMM-priced swaps for major token pairs on each supported chain</td>
+            <td>Near-CEX pricing with DeFi custody — no KYC, no withdrawal delays</td>
+          </tr>
+          <tr>
+            <td>Cross-chain swaps</td>
+            <td>Swap and bridge in a single transaction — e.g. ETH on Arbitrum → USDC on BNB Chain</td>
+            <td>Eliminates the multi-step bridge-then-swap workflow; single confirmation UX</td>
+          </tr>
+          <tr class="hi">
+            <td>Trading fee</td>
+            <td>0.025%–0.1% depending on pair and WOO staking tier</td>
+            <td>Lower than most AMM DEXs (Uniswap charges 0.05%–1% depending on pool)</td>
+          </tr>
+          <tr>
+            <td>WOO staker rebate</td>
+            <td>WOO stakers receive up to 100% fee rebate on eligible swap volume</td>
+            <td>Effective 0% trading fee for WOO stakers — significant saving for active traders</td>
+          </tr>
+          <tr class="hi">
+            <td>Aggregator sourcing</td>
+            <td>WOOfi quotes are available via 1inch, Paraswap, and OpenOcean — routed automatically when WOOfi offers best execution</td>
+            <td>Even non-WOOfi users benefit from WOOfi's pricing via DEX aggregators</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Cross-chain swap in one click:</strong> WOOfi's cross-chain swap
+      combines bridge and DEX execution atomically — you select source chain,
+      source token, destination chain, and destination token in a single interface.
+      The protocol handles bridge routing and destination swap automatically.
+      This eliminates the manual workflow of bridging first, then swapping —
+      saving time, gas, and reducing the number of transactions required.
+    </div>
+  </section>
+
+  <!-- EARN -->
+  <section class="card" id="earn">
+    <h2>WOOfi Earn: Vaults, Yield Sources, and Deposit Mechanics</h2>
+    <p>
+      <strong>WOOfi Earn</strong> is a single-asset yield platform where users deposit
+      tokens and earn APY without LP complexity, impermanent loss, or active management.
+      Vaults deploy capital into WOO Network's lending operations and optimised DeFi strategies.
+    </p>
+
+    <!-- Vault cards -->
+    <div class="vault-grid" role="list">
+      <div class="vault-card" role="listitem">
+        <div class="vault-header">
+          <div class="vault-name">🟡 USDC Earn Vault</div>
+          <div class="vault-apy high">5–12% APY</div>
+        </div>
+        <div class="vault-desc">Deposit USDC and earn yield from WOO Network's lending operations and DeFi strategies. Auto-compounding — no manual harvesting needed.</div>
+        <div class="vault-meta">
+          <span class="vault-tag tag-stable">Stablecoin</span>
+          <span class="vault-tag tag-chain">Multi-chain</span>
+          <span class="vault-tag tag-auto">Auto-compound</span>
+        </div>
+      </div>
+
+      <div class="vault-card" role="listitem">
+        <div class="vault-header">
+          <div class="vault-name">🔵 ETH Earn Vault</div>
+          <div class="vault-apy mid">3–8% APY</div>
+        </div>
+        <div class="vault-desc">Hold ETH exposure while earning yield. ETH deposited into WOOfi Earn is deployed into ETH-denominated lending strategies — rewards paid in ETH.</div>
+        <div class="vault-meta">
+          <span class="vault-tag tag-chain">ETH-denominated</span>
+          <span class="vault-tag tag-auto">Auto-compound</span>
+        </div>
+      </div>
+
+      <div class="vault-card" role="listitem">
+        <div class="vault-header">
+          <div class="vault-name">⚡ WOO Earn Vault</div>
+          <div class="vault-apy high">8–20% APY</div>
+        </div>
+        <div class="vault-desc">Stake WOO in the WOO vault for the highest APY tier — combining WOO staking rewards, fee rebate distributions, and vault strategy yield into a single compounding position.</div>
+        <div class="vault-meta">
+          <span class="vault-tag tag-woo">WOO token</span>
+          <span class="vault-tag tag-woo">Fee rebates</span>
+          <span class="vault-tag tag-auto">Auto-compound</span>
+        </div>
+      </div>
+
+      <div class="vault-card" role="listitem">
+        <div class="vault-header">
+          <div class="vault-name">🟠 BTC Earn Vault</div>
+          <div class="vault-apy mid">2–5% APY</div>
+        </div>
+        <div class="vault-desc">BTC (WBTC, BTCB) deposits earn yield while maintaining BTC price exposure. Conservative APY range reflects BTC's lower on-chain lending demand versus stablecoins.</div>
+        <div class="vault-meta">
+          <span class="vault-tag tag-chain">BTC-denominated</span>
+          <span class="vault-tag tag-auto">Auto-compound</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note aqua" style="margin-top:1.2rem">
+      <strong>Vault APY is variable and market-driven:</strong>
+      WOOfi Earn vault APYs fluctuate based on lending demand, DeFi strategy yields,
+      and WOO Network's operational performance. The ranges shown are illustrative —
+      always check the live APY in the WOOfi interface before depositing.
+      Stablecoin vaults historically offer the most consistent APY;
+      WOO vaults offer the highest potential but with token price exposure.
+    </div>
+  </section>
+
+  <!-- WOO TOKEN -->
+  <section class="card" id="woo-token">
+    <h2>WOO Token: Staking, Fee Rebates, and Tokenomics</h2>
+    <p>
+      <strong>WOO</strong> is the native token of WOO Network —
+      the central utility and governance token across both WOO X (CEX)
+      and WOOfi (DEX), creating a unified token economy across the entire ecosystem.
+    </p>
+
+    <div class="table-wrap">
+      <table aria-label="WOO token utility">
+        <thead>
+          <tr><th>Function</th><th>How WOO is used</th><th>Benefit</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Trading fee rebates (WOOfi)</td>
+            <td>Stake WOO to receive rebates on WOOfi swap fees — up to 100% rebate at highest tier</td>
+            <td>Effectively 0% trading fee for large WOO stakers — significant for high-volume traders</td>
+          </tr>
+          <tr>
+            <td>Vault APY boost</td>
+            <td>WOO stakers receive higher base APY on WOOfi Earn vaults across all assets</td>
+            <td>Enhanced yield on existing DeFi positions for WOO holders</td>
+          </tr>
+          <tr class="hi">
+            <td>WOO X fee discounts (CEX)</td>
+            <td>Hold WOO on WOO X to reduce trading fees on the centralised exchange</td>
+            <td>Unified token utility across both CEX and DEX — rare in crypto</td>
+          </tr>
+          <tr>
+            <td>Governance (WOO DAO)</td>
+            <td>WOO stakers vote on protocol parameters, fee structures, and treasury allocation</td>
+            <td>Influence over both WOOfi and WOO Network's operational direction</td>
+          </tr>
+          <tr class="hi">
+            <td>Market maker collateral</td>
+            <td>WOO Network's market-making operations use WOO as part of their collateral pool</td>
+            <td>Creates structural demand for WOO from the institutional operations that power sPMM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="toko-bar" role="list" aria-label="WOO token distribution">
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Ecosystem &amp; community</span>
+        <div class="toko-track"><div class="toko-fill" style="width:30%"></div></div>
+        <span class="toko-val">30%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">WOO Network operations</span>
+        <div class="toko-track"><div class="toko-fill aqua" style="width:25%"></div></div>
+        <span class="toko-val aqua">25%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Team &amp; advisors</span>
+        <div class="toko-track"><div class="toko-fill" style="width:20%"></div></div>
+        <span class="toko-val">20%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Investors</span>
+        <div class="toko-track"><div class="toko-fill" style="width:15%"></div></div>
+        <span class="toko-val">15%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Treasury reserve</span>
+        <div class="toko-track"><div class="toko-fill aqua" style="width:10%"></div></div>
+        <span class="toko-val aqua">10%</span>
+      </div>
+    </div>
+    <p style="font-size:.88rem; color:var(--dim); margin-top:.6rem">Total supply: 2,900,000,000 WOO (2.9 billion). Verify via official WOO Network documentation.</p>
+  </section>
+
+  <!-- CHAINS -->
+  <section class="card" id="chains">
+    <h2>Supported Chains and Cross-Chain Swaps on WOOfi</h2>
+
+    <div class="chain-grid" role="list" aria-label="Supported networks">
+      <span class="chain">Ethereum</span>
+      <span class="chain">Arbitrum One</span>
+      <span class="chain">Optimism</span>
+      <span class="chain">BNB Chain</span>
+      <span class="chain">Polygon</span>
+      <span class="chain">Avalanche</span>
+      <span class="chain">Fantom</span>
+      <span class="chain">zkSync Era</span>
+      <span class="chain">Base</span>
+      <span class="chain">Linea</span>
+      <span class="chain">+ expanding</span>
+    </div>
+
+    <div class="callout-grid" style="margin-top:1rem">
+      <div class="mini">
+        <h3>Cross-chain swap mechanics</h3>
+        <p style="color:var(--muted)">WOOfi's cross-chain swap combines Stargate Finance's bridge infrastructure with WOOfi's sPMM DEX in a single atomic flow. When you select "ETH on Arbitrum → USDC on BNB Chain," WOOfi routes through Stargate to bridge and simultaneously executes the destination swap — one transaction from your perspective, fully handled by the protocol on the backend.</p>
+        <div class="kpi-badges"><span>Stargate powered</span><span>Atomic execution</span><span>Single transaction</span></div>
+      </div>
+      <div class="mini">
+        <h3>Fees on cross-chain swaps</h3>
+        <p style="color:var(--muted)">Cross-chain swap costs include: WOOfi's swap fee on both legs (with WOO staker rebates applied), the Stargate bridge fee, and gas on both source and destination chains. The WOOfi interface shows the full cost breakdown before confirmation — including expected received amount on destination. Compare with manual bridge-then-swap to verify the cross-chain route is competitive.</p>
+        <div class="kpi-badges"><span>Full cost shown</span><span>WOO rebates apply</span><span>Compare manually</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section class="card" id="safety">
+    <h2>WOOfi Security Model and Risks</h2>
+
+    <div class="table-wrap">
+      <table aria-label="Security and risk analysis">
+        <thead>
+          <tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Smart-contract exploit</td>
+            <td class="warn">Medium</td>
+            <td>WOOfi contracts audited by multiple firms; bug bounty programme active; significant TVL creating ongoing scrutiny incentive from the security community</td>
+          </tr>
+          <tr>
+            <td>sPMM oracle manipulation</td>
+            <td class="warn">Medium</td>
+            <td>sPMM price parameters are updated by WOO Network's market-making system — a centralised oracle risk. If the price feed is manipulated, trades could execute at incorrect prices. WOOfi has circuit breakers and slippage limits as guards</td>
+          </tr>
+          <tr class="hi">
+            <td>Earn vault strategy risk</td>
+            <td class="warn">Medium</td>
+            <td>WOOfi Earn vaults deploy capital into DeFi strategies — underlying strategy exploits can affect vault principal. Stablecoin vaults have lower strategy risk than more complex yield strategies</td>
+          </tr>
+          <tr>
+            <td>WOO Network counterparty risk</td>
+            <td class="warn">Medium</td>
+            <td>WOOfi's sPMM pricing depends on WOO Network's operational integrity as a market maker. WOO Network is a regulated, institutional entity — but counterparty concentration is a real risk vs fully decentralised AMMs</td>
+          </tr>
+          <tr class="hi">
+            <td>Cross-chain bridge risk</td>
+            <td class="warn">Medium</td>
+            <td>Cross-chain swaps use Stargate — inherit Stargate's bridge risks. Bridges are the highest-risk DeFi category; use cross-chain swaps for necessary cross-chain transfers, not as primary trading strategy</td>
+          </tr>
+          <tr>
+            <td>Phishing / fake WOOfi sites</td>
+            <td class="err">High (user-controlled)</td>
+            <td>Bookmark fi.woo.org; verify domain every session; never connect wallet to sites reached via social media links or DMs claiming to be WOOfi</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>The 2023 WOOfi oracle exploit — what happened and what changed:</strong>
+      In March 2023, WOOfi suffered a flash loan exploit on Arbitrum where an attacker
+      manipulated WOOfi's sPMM price oracle, resulting in approximately $8.5M in losses.
+      WOOfi reimbursed affected users and implemented additional safeguards —
+      including price oracle validation against Chainlink reference prices
+      and tightened circuit breakers. This incident is documented in WOOfi's
+      post-mortem report and is a key reason to understand sPMM oracle risk
+      before using WOOfi for large trades.
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="card" id="comparison">
+    <h2>WOOfi vs Uniswap vs GMX vs dYdX: DEX Comparison</h2>
+
+    <div class="table-wrap">
+      <table aria-label="DEX comparison">
+        <thead>
+          <tr><th>Feature</th><th>WOOfi</th><th>Uniswap V3</th><th>GMX</th><th>dYdX</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Pricing model</td>
+            <td class="ok">sPMM — institutional data</td>
+            <td class="warn">CLMM — pool-based</td>
+            <td class="warn">GLP oracle pricing</td>
+            <td class="ok">Order book</td>
+          </tr>
+          <tr>
+            <td>Spot trading</td>
+            <td class="ok">Yes — major pairs</td>
+            <td class="ok">Yes — all pairs</td>
+            <td class="warn">Limited (perp focus)</td>
+            <td class="warn">Limited (perp focus)</td>
+          </tr>
+          <tr class="hi">
+            <td>Perp / leverage trading</td>
+            <td class="err">No</td>
+            <td class="err">No</td>
+            <td class="ok">Yes — up to 50×</td>
+            <td class="ok">Yes — up to 20×</td>
+          </tr>
+          <tr>
+            <td>Yield product</td>
+            <td class="ok">WOOfi Earn vaults</td>
+            <td class="warn">LP only (with IL)</td>
+            <td class="ok">GLP (with IL)</td>
+            <td class="err">No native yield</td>
+          </tr>
+          <tr class="hi">
+            <td>Price impact (large trades)</td>
+            <td class="ok">Low — sPMM advantage</td>
+            <td class="warn">Moderate — pool depth</td>
+            <td class="ok">Low — oracle pricing</td>
+            <td class="ok">Low — order book</td>
+          </tr>
+          <tr>
+            <td>Cross-chain native</td>
+            <td class="ok">Yes — 10+ chains</td>
+            <td class="warn">Per-chain deployments</td>
+            <td class="warn">Arbitrum + Avalanche</td>
+            <td class="warn">Single chain (Cosmos)</td>
+          </tr>
+          <tr class="hi">
+            <td>Fee for WOO stakers</td>
+            <td class="ok">Near-zero with rebates</td>
+            <td class="err">No staking rebates</td>
+            <td class="err">No staking rebates</td>
+            <td class="err">No staking rebates</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note" style="margin-top:1rem">
+      <strong>When WOOfi wins:</strong> WOOfi is at its best for spot trading large
+      sizes on major pairs (ETH, BTC, WOO) where sPMM's institutional pricing
+      advantage is most pronounced. Combined with WOO fee rebates, active traders
+      can achieve near-zero cost execution that's difficult to match on other DEXs.
+      For long-tail tokens with limited CEX liquidity, Uniswap V3's
+      permissionless pool model provides deeper coverage.
+      For leverage trading, GMX or dYdX are purpose-built and better suited.
+    </div>
+  </section>
+
+  <!-- BEST PRACTICES -->
+  <section class="card" id="best-practices">
+    <h2>Best Practices for WOOfi Traders and Yield Earners</h2>
+
+    <h3>For WOOfi traders</h3>
+    <ul style="padding-left:1.2rem; margin-bottom:1.2rem">
+      <li style="margin-bottom:.5rem"><strong>Compare WOOfi quote vs aggregator for every large swap</strong> — before executing a $10k+ trade, check the quoted price on 1inch or Paraswap. These aggregators route through WOOfi when it's best, but occasionally another venue wins. Always take the best available price.</li>
+      <li style="margin-bottom:.5rem"><strong>Stake WOO to unlock fee rebates before active trading</strong> — if you trade frequently on WOOfi, the WOO staking fee rebate pays for itself quickly. Calculate your monthly swap volume × fee rate to determine whether WOO staking ROI is positive for your trading frequency.</li>
+      <li><strong>Set a reasonable slippage tolerance</strong> — WOOfi's sPMM is designed for low slippage on major pairs; setting slippage too low may cause failed transactions during volatile periods. 0.3–0.5% is typically appropriate for major pairs; increase to 1%+ for less liquid tokens.</li>
+    </ul>
+
+    <h3>For WOOfi Earn depositors</h3>
+    <ul style="padding-left:1.2rem">
+      <li style="margin-bottom:.5rem"><strong>Start with stablecoin vaults for the lowest risk profile</strong> — USDC/USDT vaults have no price exposure to the deposited asset and lower underlying strategy complexity than ETH or WOO vaults. The APY is competitive with most DeFi lending alternatives while avoiding token price risk.</li>
+      <li style="margin-bottom:.5rem"><strong>Monitor vault APY weekly</strong> — WOOfi Earn APYs change with market conditions. If APY drops significantly below alternatives (Aave lending rate, Curve stablecoin pools), consider moving capital to a better-yielding venue.</li>
+      <li><strong>Understand that vault principal is at strategy risk</strong> — WOOfi Earn is not a savings account. The deposited capital is deployed into DeFi strategies that carry smart-contract risk. Only deposit amounts you're comfortable holding in actively deployed DeFi strategies.</li>
+    </ul>
+  </section>
+
+  <!-- TROUBLESHOOTING -->
+  <section class="card" id="troubleshooting">
+    <h2>Troubleshooting WOOfi: Swap Failures, Vault Deposits, WOO Staking</h2>
+
+    <h3>"My WOOfi swap transaction failed"</h3>
+    <ul style="padding-left:1.2rem">
+      <li>The most common cause is slippage tolerance exceeded — WOOfi's price moved between your quote and your transaction confirmation. Increase slippage tolerance to 0.5–1% and retry, especially during volatile market conditions or for less liquid pairs.</li>
+      <li>Insufficient gas is the second most common cause. WOOfi transactions, especially cross-chain swaps, require more gas than simple token transfers. Ensure your wallet has sufficient native token for gas with a comfortable buffer above the estimated fee.</li>
+    </ul>
+
+    <h3>"My WOOfi Earn deposit is showing but APY seems lower than advertised"</h3>
+    <ul style="padding-left:1.2rem">
+      <li>WOOfi Earn APY is live and variable — the rate at deposit time may differ from current rates. Check the current APY displayed in the vault interface. The rate fluctuates daily based on lending demand and strategy performance.</li>
+      <li>WOO staking tier affects vault APY. If you recently staked WOO for a boost, there may be a brief delay before the boost is reflected in your effective APY calculation.</li>
+    </ul>
+
+    <h3>"My cross-chain swap seems stuck"</h3>
+    <ul style="padding-left:1.2rem">
+      <li>Cross-chain swaps via Stargate require confirmation on both source and destination chains plus the bridge messaging time. Allow up to 10 minutes before troubleshooting. Check the source chain transaction on Etherscan/Arbiscan/etc. — if the source transaction succeeded, the destination will follow.</li>
+      <li>If the source transaction confirmed but destination hasn't arrived after 30 minutes, check Stargate's transaction tracker with your source transaction hash. Stargate's manual redemption tool can recover stuck bridge transactions.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Official WOOfi Discord is the fastest support channel:</strong>
+      For any WOOfi-specific issue — stuck swaps, vault questions, or WOO staking —
+      the official WOOfi Discord has active community support and a dedicated
+      support channel with protocol team members.
+      Always verify you're in the official Discord (linked from fi.woo.org)
+      before sharing any transaction details.
+    </div>
+  </section>
+
+  <!-- EEAT -->
+  <section class="eeat" id="eeat" aria-labelledby="eeat-title">
+    <h2 id="eeat-title">WOOfi Finance: Authoritative References &amp; External Sources</h2>
+
+    <h3>WOOfi &amp; WOO Network — Official Sources</h3>
+    <ul style="padding-left:1.2rem">
+      <li><a href="https://fi.woo.org/" target="_blank" rel="noopener nofollow">WOOfi — Official Trading &amp; Earn Interface</a></li>
+      <li><a href="https://docs.woo.org/woofi" target="_blank" rel="noopener nofollow">WOOfi — Official Documentation</a></li>
+      <li><a href="https://github.com/woonetwork" target="_blank" rel="noopener nofollow">WOO Network — GitHub (Smart Contracts)</a></li>
+      <li><a href="https://blog.woo.org/" target="_blank" rel="noopener nofollow">WOO Network — Official Blog &amp; Research</a></li>
+    </ul>
+
+    <h3>Security References</h3>
+    <ul style="padding-left:1.2rem">
+      <li><a href="https://immunefi.com/bounty/woofi/" target="_blank" rel="noopener nofollow">WOOfi — Immunefi Bug Bounty Programme</a></li>
+      <li><a href="https://rekt.news/" target="_blank" rel="noopener nofollow">Rekt.news — DeFi Security Incident Tracker</a></li>
+    </ul>
+
+    <h3>Analytics &amp; Data</h3>
+    <ul style="padding-left:1.2rem">
+      <li><a href="https://defillama.com/protocol/woofi" target="_blank" rel="noopener nofollow">DeFiLlama — WOOfi TVL &amp; Volume Data</a></li>
+      <li><a href="https://dune.com/browse/dashboards" target="_blank" rel="noopener nofollow">Dune Analytics — WOOfi On-Chain Dashboards</a></li>
+      <li><a href="https://etherscan.io/" target="_blank" rel="noopener nofollow">Etherscan — Transaction Verification</a></li>
+      <li><a href="https://revoke.cash/" target="_blank" rel="noopener nofollow">Revoke.cash — Token Approval Manager</a></li>
+    </ul>
+
+    <div class="note" style="margin-top:1.2rem">
+      <strong>About:</strong> Prepared by Crypto Finance Experts as a practical, SEO-oriented knowledge base for
+      <em>WOOfi Finance</em>: sPMM algorithm, spot trading, cross-chain swaps, WOOfi Earn vaults, WOO token staking, security history, and comparison with major DEXs.
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="card" id="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title" style="margin-top:0;border-top:none;padding-top:0">WOOfi Finance: Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f1" id="b1">
+        <h3>What is WOOfi and how is it different from Uniswap?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f1" class="faq-content" role="region" aria-labelledby="b1">
+        <p>WOOfi is a DEX and yield platform built by WOO Network that uses a synthetic Proactive Market Making (sPMM) algorithm — not a traditional AMM like Uniswap. Uniswap prices trades using only the liquidity in its own on-chain pools, creating price impact that scales with trade size. WOOfi's sPMM supplements on-chain liquidity with pricing data from WOO Network's institutional market-making operation, delivering tighter spreads on major pairs — particularly on large trades. Additionally, WOOfi offers single-asset yield vaults (WOOfi Earn) and WOO token fee rebates that Uniswap doesn't have.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f2" id="b2">
+        <h3>What is sPMM and why does it deliver better prices?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f2" class="faq-content" role="region" aria-labelledby="b2">
+        <p>sPMM (synthetic Proactive Market Making) is WOOfi's proprietary pricing algorithm. It uses a parametric price function with three key parameters — mid-price (p), spread (s), and slippage coefficient (k) — that are updated continuously by WOO Network's institutional market-making engine. Rather than pricing purely from pool supply/demand ratios, sPMM anchors on-chain prices to institutional order book data. The result is spreads and price impact closer to CEX quality, especially for major liquid pairs where WOO Network's market-making data is most relevant.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f3" id="b3">
+        <h3>How do WOOfi Earn vaults work?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f3" class="faq-content" role="region" aria-labelledby="b3">
+        <p>WOOfi Earn vaults accept single-asset deposits (USDC, USDT, ETH, BTC, WOO) and deploy the capital into yield-generating strategies — including WOO Network's institutional lending operations and optimised DeFi strategies. Depositors receive an interest-bearing token representing their vault share, and rewards auto-compound without manual claiming. You can withdraw at any time. APY is variable and displayed live in the WOOfi interface. WOO stakers receive enhanced APY across all vaults.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f4" id="b4">
+        <h3>How do WOO token fee rebates work?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f4" class="faq-content" role="region" aria-labelledby="b4">
+        <p>Stake WOO tokens on WOOfi to enter the fee rebate programme. Different staking tiers (based on WOO staked amount) receive different rebate percentages — ranging from partial rebates at lower tiers to up to 100% fee rebate at the highest tier. The rebate is credited in WOO tokens or deducted from fee calculations depending on the implementation. For high-frequency traders, the effective trading cost with WOO staking can approach zero — making WOOfi among the cheapest execution venues in DeFi for those who hold WOO.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f5" id="b5">
+        <h3>Was WOOfi hacked? Is it safe to use?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f5" class="faq-content" role="region" aria-labelledby="b5">
+        <p>In March 2023, WOOfi suffered a flash loan exploit on Arbitrum where an attacker manipulated the sPMM price oracle, resulting in approximately $8.5M in losses from the liquidity pool. WOO Network reimbursed affected liquidity providers in full. Following the incident, WOOfi implemented Chainlink price reference validation as a secondary oracle check, tightened circuit breakers, and improved slippage limits. The exploit is documented in WOOfi's public post-mortem. Since the fix, WOOfi has operated without a repeat incident — but the oracle risk is real and users should understand it before using WOOfi for large positions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f6" id="b6">
+        <h3>How do cross-chain swaps work on WOOfi?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f6" class="faq-content" role="region" aria-labelledby="b6">
+        <p>WOOfi's cross-chain swap combines Stargate Finance's bridge with WOOfi's sPMM DEX in a single transaction. You select source chain, source token, destination chain, and destination token in WOOfi's interface. WOOfi handles the bridge routing (via Stargate) and the destination swap automatically — you sign one transaction on the source chain and receive your destination tokens without managing the bridge step separately. The full cost (swap fees on both legs + bridge fee + gas) is shown before confirmation. Cross-chain swaps typically complete in 2–10 minutes depending on source chain finality.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f7" id="b7">
+        <h3>Which chains does WOOfi support?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f7" class="faq-content" role="region" aria-labelledby="b7">
+        <p>WOOfi supports Ethereum, Arbitrum One, Optimism, BNB Chain, Polygon, Avalanche, Fantom, zkSync Era, Base, Linea, and additional chains with ongoing expansion. The WOOfi interface shows all currently active chain deployments — check fi.woo.org for the current supported chain list. WOOfi Earn vault availability varies by chain — some vaults are chain-specific while others are available across multiple networks.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f8" id="b8">
+        <h3>How does WOOfi compare to GMX for yield?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f8" class="faq-content" role="region" aria-labelledby="b8">
+        <p>GMX offers yield via its GLP token (providing liquidity to its perp DEX), while WOOfi Earn offers single-asset vaults. Key differences: GMX's GLP yield is higher but carries exposure to trader P&amp;L (if traders profit, GLP holders lose) and impermanent loss from the multi-asset basket. WOOfi Earn vaults are single-asset with no impermanent loss — USDC deposited always returns USDC (plus yield). WOOfi's stablecoin vault APY is typically comparable to or above GMX GLP stablecoin APY without the trader counterparty risk. For risk-adjusted stablecoin yield, WOOfi Earn is generally the more conservative choice.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f9" id="b9">
+        <h3>What is the relationship between WOOfi and WOO X (the CEX)?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f9" class="faq-content" role="region" aria-labelledby="b9">
+        <p>WOOfi and WOO X are both products of WOO Network — they share the WOO token ecosystem and underlying liquidity infrastructure. WOO X is the centralised exchange for users who prefer CEX trading with KYC; WOOfi is the DeFi arm for users who want self-custodial trading. The WOO token provides utility on both platforms — fee discounts on WOO X and fee rebates on WOOfi — making it one of the few tokens with genuine dual-venue utility. WOOfi's sPMM pricing draws from the same market-making intelligence that powers WOO X's institutional order book, bridging the CEX-DeFi pricing gap.</p>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="container" role="contentinfo" style="padding:2.5rem 0; border-top:1px solid var(--line); margin-top:2rem">
+  <p style="color:var(--dim); font-size:.93rem">© 2026 WOOfi Finance Guide. Educational content with a security-first operational focus. Not financial advice.</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-button').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        const c = document.getElementById(b.getAttribute('aria-controls'));
+        c.classList.remove('open'); c.style.maxHeight = '0';
+      });
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        const content = document.getElementById(btn.getAttribute('aria-controls'));
+        content.classList.add('open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+</body>
+</html>
